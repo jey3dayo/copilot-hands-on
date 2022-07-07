@@ -1,0 +1,22 @@
+## Environment normalisation:
+.direnv/
+.git/
+.github/
+node_modules/
+copilot/
+
+.dockerignore
+.editorconfig
+.env*
+!.env.template
+.gitignore
+.ncurc
+Dockerfile
+docker-compose.yml
+yarn-error.log
+
+.DS_Store
+Thumbs.db
+tags
+
+dist/
