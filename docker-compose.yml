@@ -1,0 +1,17 @@
+version: '3'
+volumes:
+  node_modules:
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+      - type: bind
+        source: ./node_modules
+        target: /app/node_modules
+    env_file:
+      - '.env'

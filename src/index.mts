@@ -10,9 +10,6 @@ interface Area {
 }
 
 const data = (await fetch('https://www.jma.go.jp/bosai/common/const/area.json').then(v => v.json())) as Area;
-console.log(data.centers);
-console.log(data.offices);
-console.log(data.class10s);
-console.log(data.class15s);
+console.log(Object.keys(data));
 
 console.log({ params });
