@@ -11,9 +11,12 @@ datasource db {
 }
 
 model Article {
-  id        String   @id @default(cuid())
+  id        String  @default(cuid())
+  seedId    Int
+  no        String
   title     String
   date      DateTime
-  createdBy String
   createdAt DateTime @default(now())
+
+  @@id([seedId, no])
 }
