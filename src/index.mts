@@ -17,12 +17,13 @@ console.log(Object.keys(data));
 const prisma = new PrismaClient();
 
 const today = new Date();
+const createdBy = process?.env?.USER ?? 'unknown';
 await prisma.article.create({
   data: {
     title: `title ${format(today, 'yyyy-MM-dd HH:mm:ss')}`,
     date: today,
     createdAt: today,
-    createdBy: 'ME',
+    createdBy,
   },
 });
 

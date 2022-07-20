@@ -10,6 +10,7 @@
     "ts": "npx ts-node",
     "ts-esm": "node --loader ts-node/esm",
     "start": "yarn build:live",
+    "start:prod": "litestream replicate --config etc/litestream.yml -exec 'node dist/index.mjs'",
     "test": "run-s eslint",
     "build": "npx prisma generate && tsc",
     "build:live": "nodemon --watch 'src/**/*.mts' --exec 'node' --loader ts-node/esm src/index.mts",
