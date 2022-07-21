@@ -8,6 +8,7 @@ const selectors = {
 
 type Seed = {
   id: number;
+  name: string;
   type: SeedType;
   url: string;
   selector: string;
@@ -15,14 +16,23 @@ type Seed = {
 export const seeds: Seed[] = [
   {
     id: 1,
+    name: 'アフターゴッド',
     type: 'urasunday',
     url: 'https://urasunday.com/title/1755',
     selector: selectors.urasunday,
   },
   {
     id: 2,
+    name: '満州アヘンスクワッド',
     type: 'yanmaga',
     url: 'https://yanmaga.jp/comics/満州アヘンスクワッド',
+    selector: selectors.yanmaga,
+  },
+  {
+    id: 3,
+    name: 'ファブル',
+    type: 'yanmaga',
+    url: 'https://yanmaga.jp/comics/ザ_ファブル',
     selector: selectors.yanmaga,
   },
 ];

@@ -45,7 +45,7 @@ const tasks = seeds.map(({ id: seedId, type: parseType, url, selector }) =>
 
           case 'yanmaga':
             [date, title] = content as string[];
-            no = title?.match(/[＃|第]([\D]*)+\s/)?.[1] ?? title;
+            no = title?.match(/[＃|第]([0-9０-９]{1,4})\s*/)?.[1] ?? title;
             if (date === '公開予定：') return null;
 
             return {
