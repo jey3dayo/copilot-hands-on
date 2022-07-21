@@ -46,6 +46,8 @@ const tasks = seeds.map(({ id: seedId, type: parseType, url, selector }) =>
           case 'yanmaga':
             [date, title] = content as string[];
             no = title?.match(/[＃|第]([\D]*)+\s/)?.[1] ?? title;
+            if (date === '公開予定：') return null;
+
             return {
               seedId,
               no,
@@ -61,7 +63,9 @@ const tasks = seeds.map(({ id: seedId, type: parseType, url, selector }) =>
 
     const queries = rows.map(row =>
       prisma.article.upsert({
-        where: { seedId_no: { seedId: row?.seedId, no: row?.no } } as Prisma.ArticleWhereUniqueInput,
+        where: {
+          seedId_no: { seedId: row?.seedId, no: row?.no },
+        } as Prisma.ArticleWhereUniqueInput,
         create: row as Prisma.ArticleCreateInput,
         update: row as Prisma.ArticleUpdateInput,
       }),
@@ -73,11 +77,20 @@ const tasks = seeds.map(({ id: seedId, type: parseType, url, selector }) =>
 
 await Promise.resolve(tasks);
 
-const articles = await prisma.article.findMany({
-  where: { seedId: 1 },
-  skip: 0,
-  take: 3,
-  orderBy: { date: 'desc' },
+// FIXME: groupByにselectかけないからcondition作ってから取る
+type ArticleCondition = { seedId: number; date: Date };
+
+const targetCondition: ArticleCondition[] = await prisma.article
+  .groupBy({
+    by: ['seedId'],
+    _max: {
+      date: true,
+    },
+  })
+  .then(v => v.map(w => ({ seedId: w.seedId, date: w._max.date } as ArticleCondition)));
+
+const target = await prisma.article.findMany({
+  where: { OR: targetCondition },
 });
 
-console.log(articles);
+console.log(target);

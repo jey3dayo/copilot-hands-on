@@ -32,6 +32,7 @@ module.exports = {
     "no-param-reassign": 0,
     "no-plusplus": 0,
     "no-restricted-syntax": 0,
+    "no-underscore-dangle": 0,
     "import/no-relative-packages": 0,
     "import/no-dynamic-require": 0,
     "import/prefer-default-export": 0,
