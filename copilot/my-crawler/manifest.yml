@@ -1,0 +1,34 @@
+# The manifest for the "my-crawler" job.
+# Read the full specification for the "Scheduled Job" type at:
+#  https://aws.github.io/copilot-cli/docs/manifest/scheduled-job/
+
+# Your job name will be used in naming your resources like log groups, ECS Tasks, etc.
+name: my-crawler
+type: Scheduled Job
+
+# Trigger for your task.
+on:
+  # The scheduled trigger for your job. You can specify a Unix cron schedule or keyword (@weekly) or a rate (@every 1h30m)
+  # AWS Schedule Expressions are also accepted: https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html
+  schedule: "10 14 * * *"
+#retries: 3        # Optional. The number of times to retry the job before failing.
+#timeout: 1h30m    # Optional. The timeout after which to stop the job if it's still running. You can use the units (h, m, s).
+
+image:
+  build: Dockerfile
+
+cpu: 256
+memory: 512
+
+variables:
+  TZ: UTC
+  NODE_ENV: development
+
+secrets:
+  DATABASE_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/DATABASE_URL
+  REPLICA_URL: /copilot/${COPILOT_APPLICATION_NAME}/${COPILOT_ENVIRONMENT_NAME}/secrets/REPLICA_URL
+
+environments:
+  production:
+    variables:
+      NODE_ENV: production
